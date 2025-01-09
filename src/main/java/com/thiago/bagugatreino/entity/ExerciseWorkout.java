@@ -19,9 +19,6 @@ public class ExerciseWorkout {
     @Column(name = "id_exercise_workout")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "workout_id")
-    private Workout workout;
 
     @ManyToOne
     @JoinColumn(name = "exercise_id")

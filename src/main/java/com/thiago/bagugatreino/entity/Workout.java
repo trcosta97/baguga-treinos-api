@@ -26,18 +26,25 @@ public class Workout {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private String name;
+
     private LocalDateTime date;
 
     private LocalDateTime registerTime;
 
     private Boolean active;
 
-    @OneToMany(mappedBy = "workout")
-    private List<ExerciseWorkout> exercises;
+    @OneToMany
+    private List<Exercise> exercises;
 
     @PrePersist
     public void prePersist() {
         this.active = true;
         this.registerTime = LocalDateTime.now();
     }
+
+    public void addExercise(Exercise exercise){
+        this.exercises.add(exercise);
+    }
+
 }
