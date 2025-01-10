@@ -1,11 +1,14 @@
 package com.thiago.bagugatreino.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record CreateUserDto(String name,
                             String email,
-                            LocalDateTime birthday,
+                            LocalDate birthday,
                             String password,
-                            Character gender
+                            String gender
                             ) {
 }

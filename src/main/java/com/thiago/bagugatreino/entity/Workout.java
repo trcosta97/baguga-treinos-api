@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,14 +30,14 @@ public class Workout {
 
     private String name;
 
-    private LocalDateTime date;
-
     private LocalDateTime registerTime;
 
     private Boolean active;
 
     @OneToMany
-    private List<Exercise> exercises;
+    private List<Exercise> exercises = new ArrayList<>();
+    @OneToMany(mappedBy = "workout")
+    private List<ExerciseSet> exerciseSets = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
