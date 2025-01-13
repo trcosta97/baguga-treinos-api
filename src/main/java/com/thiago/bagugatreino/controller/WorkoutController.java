@@ -1,9 +1,7 @@
 package com.thiago.bagugatreino.controller;
 
-import com.thiago.bagugatreino.dto.CreateExerciseDto;
-import com.thiago.bagugatreino.dto.CreateWorkoutDto;
-import com.thiago.bagugatreino.entity.Exercise;
-import com.thiago.bagugatreino.entity.Workout;
+import com.thiago.bagugatreino.dto.request.CreateWorkoutRequestDto;
+import com.thiago.bagugatreino.dto.response.CreateWorkoutResponseDto;
 import com.thiago.bagugatreino.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +16,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class WorkoutController {
 
     @Autowired
-    WorkoutService service;
+    private WorkoutService service;
 
     @PostMapping
-    public ResponseEntity<Workout> create(@RequestBody CreateWorkoutDto data, UriComponentsBuilder uriBuilder){
-        var workout = service.create(new Workout(data));
+    public ResponseEntity<CreateWorkoutResponseDto> create(@RequestBody CreateWorkoutRequestDto data, UriComponentsBuilder uriBuilder) {
+        var workout = service.create(data);
         var uri = uriBuilder.path("/workout/{id}").buildAndExpand(workout.getId()).toUri();
-        return ResponseEntity.created(uri).body(workout);
+        var response = new CreateWorkoutResponseDto(workout);
+        return ResponseEntity.created(uri).body(response);
     }
 }
+

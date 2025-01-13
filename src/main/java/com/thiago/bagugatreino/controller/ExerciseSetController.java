@@ -1,6 +1,7 @@
 package com.thiago.bagugatreino.controller;
 
-import com.thiago.bagugatreino.dto.CreateExerciseSet;
+import com.thiago.bagugatreino.dto.request.CreateExerciseSetRequestDto;
+import com.thiago.bagugatreino.dto.response.CreateExerciseSetResponseDto;
 import com.thiago.bagugatreino.entity.ExerciseSet;
 import com.thiago.bagugatreino.service.ExerciseSetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class ExerciseSetController {
 
 
     @PostMapping
-    public ResponseEntity<ExerciseSet> create(@RequestBody CreateExerciseSet data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<CreateExerciseSetResponseDto> create(@RequestBody CreateExerciseSetRequestDto data, UriComponentsBuilder uriBuilder) {
         var exerciseSet = service.create(data);
         var uri = uriBuilder.path("/exerciseSet/{id}").buildAndExpand(exerciseSet.getId()).toUri();
-        return ResponseEntity.created(uri).body(exerciseSet);
+        var response = new CreateExerciseSetResponseDto(exerciseSet);
+        return ResponseEntity.created(uri).body(response);
     }
 
 }

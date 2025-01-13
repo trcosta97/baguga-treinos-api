@@ -1,7 +1,7 @@
 package com.thiago.bagugatreino.service;
 
 
-import com.thiago.bagugatreino.dto.CreateExerciseSet;
+import com.thiago.bagugatreino.dto.request.CreateExerciseSetRequestDto;
 import com.thiago.bagugatreino.entity.Exercise;
 import com.thiago.bagugatreino.entity.ExerciseSet;
 import com.thiago.bagugatreino.entity.Workout;
@@ -26,7 +26,7 @@ public class ExerciseSetService {
     @Autowired
     private WorkoutRepository workoutRepository;
 
-    public ExerciseSet create(CreateExerciseSet data) {
+    public ExerciseSet create(CreateExerciseSetRequestDto data) {
         // Load Exercise and Workout from their IDs
         Exercise exercise = exerciseRepository.findById(data.exerciseId())
                 .orElseThrow(() -> new EntityNotFoundException("Exercise not found with ID: " + data.exerciseId()));

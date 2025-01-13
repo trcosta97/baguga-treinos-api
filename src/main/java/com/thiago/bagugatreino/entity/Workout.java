@@ -1,12 +1,10 @@
 package com.thiago.bagugatreino.entity;
 
+import com.thiago.bagugatreino.dto.request.CreateWorkoutRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +13,6 @@ import java.util.List;
 @Table(name = "tb_workout")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class Workout {
 
     @Id
@@ -38,6 +34,54 @@ public class Workout {
     private List<Exercise> exercises = new ArrayList<>();
     @OneToMany(mappedBy = "workout")
     private List<ExerciseSet> exerciseSets = new ArrayList<>();
+
+    public Workout (){}
+
+    public Long getId() {
+        return id;
+    }
+    public User getUser() {
+        return user;
+    }
+    public String getName() {
+        return name;
+    }
+    public Boolean getActive() {
+        return active;
+    }
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+    public List<ExerciseSet> getExerciseSets() {
+        return exerciseSets;
+    }
+    public void setExerciseSets(List<ExerciseSet> exerciseSets) {
+        this.exerciseSets = exerciseSets;
+    }
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+    public void setRegisterTime(LocalDateTime registerTime) {
+        this.registerTime = registerTime;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Workout(CreateWorkoutRequestDto data) {
+        this.name = data.name();
+        this.registerTime = LocalDateTime.now(); // Automatically set the registration time
+        this.active = true;
+    }
 
     @PrePersist
     public void prePersist() {

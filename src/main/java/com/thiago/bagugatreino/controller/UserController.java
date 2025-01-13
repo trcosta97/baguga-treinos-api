@@ -1,6 +1,7 @@
 package com.thiago.bagugatreino.controller;
 
-import com.thiago.bagugatreino.dto.CreateUserDto;
+import com.thiago.bagugatreino.dto.request.CreateUserRequestDto;
+import com.thiago.bagugatreino.dto.response.CreateUserResponseDto;
 import com.thiago.bagugatreino.entity.User;
 import com.thiago.bagugatreino.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,11 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody CreateUserDto data, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<CreateUserResponseDto> create(@RequestBody CreateUserRequestDto data, UriComponentsBuilder uriBuilder){
         var user = service.create(new User(data));
         var uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(user);
+        var response = new CreateUserResponseDto(user);
+        return ResponseEntity.created(uri).body(response);
     }
 
 }

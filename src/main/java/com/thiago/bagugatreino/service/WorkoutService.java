@@ -1,10 +1,14 @@
 package com.thiago.bagugatreino.service;
 
 
+import com.thiago.bagugatreino.dto.request.CreateWorkoutRequestDto;
 import com.thiago.bagugatreino.entity.Exercise;
+import com.thiago.bagugatreino.entity.User;
 import com.thiago.bagugatreino.entity.Workout;
 import com.thiago.bagugatreino.repository.ExerciseRepository;
+import com.thiago.bagugatreino.repository.UserRepository;
 import com.thiago.bagugatreino.repository.WorkoutRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +18,24 @@ import java.util.Optional;
 public class WorkoutService {
 
     @Autowired
-    WorkoutRepository repository;
-    @Autowired
-    ExerciseRepository exerciseRepository;
+    private WorkoutRepository repository;
 
-    public Workout create(Workout workout){
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ExerciseRepository exerciseRepository;
+
+    public Workout create(CreateWorkoutRequestDto data) {
+        // Fetch the user by ID
+        User user = userRepository.findById(data.userId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + data.userId()));
+
+        // Create the Workout
+        Workout workout = new Workout(data);
+        workout.setUser(user); // Assign the user to the workout
+
+        // Save and return the Workout
         return repository.save(workout);
     }
 
