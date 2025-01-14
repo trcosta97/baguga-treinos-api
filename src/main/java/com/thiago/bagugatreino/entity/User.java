@@ -2,13 +2,18 @@ package com.thiago.bagugatreino.entity;
 
 import com.thiago.bagugatreino.dto.request.CreateUserRequestDto;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Table(name = "tb_user")
 @Entity(name = "User")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_user")
@@ -18,17 +23,19 @@ public class User {
     private String password;
     private LocalDate birthday;
     private String gender;
+    private UserRole role;
     private LocalDateTime registerTime;
     private Boolean active;
 
     public User(){}
 
-    public User(CreateUserRequestDto data) {
+    public User(CreateUserRequestDto data, String encryptedPassword) {
         this.name = data.name();
         this.email = data.email();
-        this.password = data.password();
+        this.password = encryptedPassword;
         this.birthday = data.birthday();
         this.gender = data.gender();
+        this.role = data.role();
     }
 
     public Long getId(){
@@ -40,9 +47,42 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public LocalDate getBirthday() {
         return birthday;
     }

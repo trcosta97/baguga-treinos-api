@@ -20,12 +20,6 @@ public class UserController {
     UserService service;
 
 
-    @PostMapping
-    public ResponseEntity<CreateUserResponseDto> create(@RequestBody CreateUserRequestDto data, UriComponentsBuilder uriBuilder){
-        var user = service.create(new User(data));
-        var uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
-        var response = new CreateUserResponseDto(user);
-        return ResponseEntity.created(uri).body(response);
-    }
+
 
 }
