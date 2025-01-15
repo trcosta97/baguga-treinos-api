@@ -19,6 +19,7 @@ import java.util.List;
 public class ExerciseController {
 
     @Autowired
+
     ExerciseService service;
 
     @PostMapping
@@ -31,7 +32,7 @@ public class ExerciseController {
 
     @GetMapping
     public ResponseEntity<List<ListExerciseResponseDto>> getAll(){
-        var exercices = service.getAll();
+        var exercices = service.getAll("muscularGroup", "asc");
         var response = new ArrayList<ListExerciseResponseDto>();
         for (Exercise exercise : exercices){
             var reponseExercise = new ListExerciseResponseDto(exercise);
@@ -39,6 +40,4 @@ public class ExerciseController {
         }
         return ResponseEntity.ok(response);
     }
-
-
 }

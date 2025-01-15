@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tb_exercise")
 @AllArgsConstructor
-@NoArgsConstructor
 public class Exercise {
 
     @Id

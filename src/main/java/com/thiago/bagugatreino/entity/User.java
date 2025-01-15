@@ -29,13 +29,12 @@ public class User implements UserDetails {
 
     public User(){}
 
-    public User(CreateUserRequestDto data, String encryptedPassword) {
-        this.name = data.name();
-        this.email = data.email();
-        this.password = encryptedPassword;
-        this.birthday = data.birthday();
-        this.gender = data.gender();
-        this.role = data.role();
+
+
+    public User(String email, String password, UserRole role){
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId(){
