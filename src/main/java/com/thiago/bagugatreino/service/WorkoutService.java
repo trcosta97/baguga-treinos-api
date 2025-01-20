@@ -12,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,10 @@ public class WorkoutService {
     public Workout findById(Long id){
         Optional<Workout> optionalWorkout = repository.findById(id);
         return optionalWorkout.orElse(null);
+    }
+
+    public List<Workout> getAllByUserId(Long id){
+        return repository.findByUserId(id);
     }
 
     public Workout addExercise(Long exerciseId, Long workoutId){

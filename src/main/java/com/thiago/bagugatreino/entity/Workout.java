@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "tb_workout")
 @AllArgsConstructor
-@NoArgsConstructor
 public class Workout {
 
     @Id

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_exercise")
-@AllArgsConstructor
+
 public class Exercise {
 
     @Id
@@ -64,4 +64,6 @@ public class Exercise {
         this.image = data.desciption();
         this.muscularGroup = data.muscularGroup();
     }
+
+
 }

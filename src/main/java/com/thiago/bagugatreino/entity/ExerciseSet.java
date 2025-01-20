@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tb_exercise_workout")
+@Table(name = "tb_exercise_set")
 @AllArgsConstructor
-@NoArgsConstructor
 public class ExerciseSet {
 
     @Id
@@ -26,6 +25,9 @@ public class ExerciseSet {
     @ManyToOne
     @JoinColumn(name = "workoutId")
     private Workout workout;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
     private LocalDateTime registerTime;
 
     public ExerciseSet(){}
@@ -48,6 +50,9 @@ public class ExerciseSet {
     public LocalDateTime getRegisterTime() {
         return registerTime;
     }
+    public User getUser(){return this.user; }
+
+    public void setUser(User user){ this.user = user; }
     public void setRegisterTime(LocalDateTime registerTime) {
         this.registerTime = registerTime;
     }
@@ -66,6 +71,7 @@ public class ExerciseSet {
     public void setId(Long id) {
         this.id = id;
     }
+
     public ExerciseSet(CreateExerciseSetRequestDto data) {
         this.repetitions = data.repetitions();
         this.weight = data.weight();
