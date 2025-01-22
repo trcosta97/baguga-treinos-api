@@ -46,7 +46,7 @@ public class AuthenticationController {
         if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.email(), encryptedPassword, data.role());
+        User newUser = new User(data.email(), encryptedPassword, data.role(), data.name(), data.birthday(), data.gender());
         this.repository.save(newUser);
         return ResponseEntity.ok().build();
     }

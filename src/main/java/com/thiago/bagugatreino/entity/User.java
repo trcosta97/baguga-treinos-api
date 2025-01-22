@@ -31,10 +31,14 @@ public class User implements UserDetails {
 
 
 
-    public User(String email, String password, UserRole role){
+    public User(String email, String password, UserRole role, String name, LocalDate birthday, String gender){
         this.email = email;
         this.password = password;
         this.role = role;
+        this.gender = gender;
+        this.name = name;
+        this.birthday = birthday;
+
     }
 
     public Long getId(){
